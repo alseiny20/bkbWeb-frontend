@@ -125,3 +125,9 @@ body {
     padding: 0 var(--space-md);
   }
 }
+
+@media (max-width: 768px) {
+  .App {
+    padding-top: 112px;
+  }
+}
