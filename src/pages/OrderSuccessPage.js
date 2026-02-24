@@ -1,0 +1,102 @@
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import './OrderSuccessPage.css';
+
+const OrderSuccessPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const data = location.state;
+
+  if (!data) {
+    navigate('/');
+    return null;
+  }
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('fr-FR').format(price) + ' GNF';
+  };
+
+  const getProductIcon = (categoryId) => {
+    switch(categoryId) {
+      case 1: return "📱"; // Téléphone
+      case 2: return "💻"; // Électronique
+      case 3: return "❄️"; // Électroménager
+      default: return "🛍️";
+    }
+  };
+
+  return (
+    <div className="order-success-page">
+      <div className="container">
+        <div className="success-content">
+          <div className="success-icon">✅</div>
+          <h1>Commande confirmée !</h1>
+          <p className="success-message">
+            Merci pour votre commande. Nous vous contacterons bientôt pour la livraison.
+          </p>
+
+          <div className="order-number">
+            <span>Numéro de commande :</span>
+            <strong>#{data.orderNumber}</strong>
+          </div>
+
+          <div className="order-details">
+            <h2>Détails de la commande</h2>
+
+            <div className="detail-section">
+              <h3>Informations de livraison</h3>
+              <div className="detail-item">
+                <span className="detail-label">Nom :</span>
+                <span className="detail-value">{data.customerName}</span>
+              </div>
+              <div className="detail-item">
+                <span className="detail-label">Adresse :</span>
+                <span className="detail-value">{data.customerAddress}</span>
+              </div>
+            </div>
+
+            <div className="detail-section">
+              <h3>Articles commandés</h3>
+              {data.items.map((item, index) => (
+                <div key={index} className="order-item">
+                  <div className="order-item-image">
+                    {item.image ? (
+                      <img src={item.image} alt={item.name} />
+                    ) : (
+                      <span className="product-icon-fallback">
+                        {getProductIcon(item.categoryId)}
+                      </span>
+                    )}
+                  </div>
+                  <div className="order-item-info">
+                    <span className="order-item-name">{item.name}</span>
+                    <span className="order-item-qty">x {item.quantity}</span>
+                  </div>
+                  <span className="order-item-price">
+                    {formatPrice(item.price * item.quantity)}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="order-total">
+              <span>Total</span>
+              <span className="total-amount">{formatPrice(data.totalAmount)}</span>
+            </div>
+          </div>
+
+          <div className="success-actions">
+            <Link to="/catalog" className="btn-continue">
+              Continuer mes achats
+            </Link>
+            <Link to="/" className="btn-home">
+              Retour à l'accueil
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OrderSuccessPage;
