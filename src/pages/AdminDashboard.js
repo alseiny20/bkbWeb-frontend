@@ -447,20 +447,8 @@ const ProductModal = ({ product, categories, onSave, onClose }) => {
 
     setUploading(true);
     try {
-      const formDataUpload = new FormData();
-      formDataUpload.append('image', selectedFile);
-
-      const response = await fetch('http://localhost:3001/api/upload', {
-        method: 'POST',
-        body: formDataUpload
-      });
-
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'upload');
-      }
-
-      const data = await response.json();
-      return `http://localhost:3001${data.imageUrl}`;
+      const imageUrl = await ApiService.uploadImage(selectedFile);
+      return imageUrl;
     } catch (error) {
       console.error('Erreur upload:', error);
       alert('Erreur lors de l\'upload de l\'image');

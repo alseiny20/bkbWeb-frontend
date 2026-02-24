@@ -196,6 +196,30 @@ class ApiService {
       throw error;
     }
   }
+
+  // === UPLOAD IMAGE ===
+  async uploadImage(file) {
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch(`${API_BASE_URL}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erreur HTTP: ${response.status}`);
+      }
+
+      const data = await response.json();
+      // Retourner l'URL complète de l'image
+      return `${API_BASE_URL.replace('/api', '')}${data.imageUrl}`;
+    } catch (error) {
+      console.error('Erreur lors de l\'upload de l\'image:', error);
+      throw error;
+    }
+  }
 }
 
 const apiService = new ApiService();
