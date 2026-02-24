@@ -67,7 +67,9 @@ const Header = () => {
       <div className="container">
         <div className="logo">
           <Link to="/" className="logo-link">
-            <span className="logo-mark">BKB</span>
+            <span className="logo-mark">
+              <img src="/favicon.png" alt="BKB" className="logo-mark-image" />
+            </span>
             <div className="logo-text">
               <span className="brand-name">BKB</span>
               <span className="brand-tagline">Commerce & Services</span>

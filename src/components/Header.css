@@ -42,16 +42,20 @@
   align-items: center;
   justify-content: center;
   min-width: 44px;
+  width: 44px;
   height: 44px;
-  padding: 0 0.45rem;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--primary-600), var(--accent-500));
-  color: #fff;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
-  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+  background: #ffffff;
+}
+
+.logo-mark-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .logo-link:hover {
@@ -524,8 +528,8 @@
   .logo-mark {
     display: inline-flex;
     min-width: 38px;
+    width: 38px;
     height: 38px;
-    font-size: 0.78rem;
     border-radius: 11px;
   }
 
