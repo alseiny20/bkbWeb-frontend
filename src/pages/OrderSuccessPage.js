@@ -29,69 +29,58 @@ const OrderSuccessPage = () => {
     <div className="order-success-page">
       <div className="container">
         <div className="success-content">
-          <div className="success-icon">✅</div>
-          <h1>Commande confirmée !</h1>
-          <p className="success-message">
-            Merci pour votre commande. Nous vous contacterons bientôt pour la livraison.
-          </p>
-
-          <div className="order-number">
-            <span>Numéro de commande :</span>
-            <strong>#{data.orderNumber}</strong>
+          <div className="success-header-block">
+            <div className="brand-name">BKB MARKET</div>
+            <h1>Nouvelle commande reçue</h1>
+            <p className="order-number-title">Commande BKB-{data.orderNumber}</p>
           </div>
 
-          <div className="order-details">
-            <h2>Détails de la commande</h2>
+          <div className="email-notification">
+            📧 Un email de confirmation a été envoyé à votre adresse
+          </div>
 
-            <div className="detail-section">
-              <h3>Informations de livraison</h3>
-              <div className="detail-item">
-                <span className="detail-label">Nom :</span>
-                <span className="detail-value">{data.customerName}</span>
-              </div>
-              <div className="detail-item">
-                <span className="detail-label">Adresse :</span>
-                <span className="detail-value">{data.customerAddress}</span>
-              </div>
+          <div className="order-info-section">
+            <div className="info-row">
+              <span className="info-label">Date:</span>
+              <span className="info-value">{new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
             </div>
+            <div className="info-row">
+              <span className="info-label">Client:</span>
+              <span className="info-value">{data.customerName}</span>
+            </div>
+            <div className="info-row">
+              <span className="info-label">Téléphone:</span>
+              <span className="info-value">{data.customerPhone || 'Non fourni'}</span>
+            </div>
+            <div className="info-row">
+              <span className="info-label">Email:</span>
+              <span className="info-value">{data.customerEmail || 'Non fourni'}</span>
+            </div>
+            <div className="info-row">
+              <span className="info-label">Adresse:</span>
+              <span className="info-value">{data.customerAddress}</span>
+            </div>
+          </div>
 
-            <div className="detail-section">
-              <h3>Articles commandés</h3>
-              <div className="order-items-list">
-                {data.items.map((item, index) => (
-                  <div key={index} className="order-item-card">
-                    <div className="order-item-top">
-                      <div className="order-item-image">
-                        {item.image ? (
-                          <img src={item.image} alt={item.name} />
-                        ) : (
-                          <span className="product-icon-fallback">
-                            {getProductIcon(item.categoryId)}
-                          </span>
-                        )}
-                      </div>
-                      <div className="order-item-details">
-                        <h4 className="order-item-name">{item.name}</h4>
-                        <p className="order-item-quantity">Quantité: {item.quantity}</p>
-                      </div>
-                    </div>
-                    <div className="order-item-bottom">
-                      <div className="order-item-price-detail">
-                        <span className="price-label">{formatPrice(item.price)} × {item.quantity}</span>
-                      </div>
-                      <div className="order-item-total">
-                        {formatPrice(item.price * item.quantity)}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+          <div className="order-table">
+            <div className="table-header">
+              <div className="col-article">ARTICLE</div>
+              <div className="col-qty">QTÉ</div>
+              <div className="col-price">PRIX</div>
+              <div className="col-total">SOUS-TOTAL</div>
+            </div>
+            {data.items.map((item, index) => (
+              <div key={index} className="table-row">
+                <div className="col-article">{item.name}</div>
+                <div className="col-qty">{item.quantity}</div>
+                <div className="col-price">{formatPrice(item.price)}</div>
+                <div className="col-total">{formatPrice(item.price * item.quantity)}</div>
               </div>
-            </div>
+            ))}
+          </div>
 
-            <div className="order-total">
-              <span>Total</span>
-              <span className="total-amount">{formatPrice(data.totalAmount)}</span>
-            </div>
+          <div className="order-total-block">
+            <span>Total: {formatPrice(data.totalAmount)}</span>
           </div>
 
           <div className="success-actions">
