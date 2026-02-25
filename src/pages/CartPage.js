@@ -123,11 +123,6 @@ const CartPage = () => {
               <span>{formatPrice(getCartTotal())}</span>
             </div>
 
-            <div className="summary-line">
-              <span>Livraison</span>
-              <span>Gratuite</span>
-            </div>
-
             <div className="summary-divider"></div>
 
             <div className="summary-line total">

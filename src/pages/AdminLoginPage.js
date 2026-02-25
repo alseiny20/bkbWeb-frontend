@@ -2,31 +2,46 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminLoginPage.css';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
 const AdminLoginPage = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Mot de passe hardcodé (à améliorer avec authentification réelle plus tard)
-  const ADMIN_PASSWORD = 'bkb2025';
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      if (password === ADMIN_PASSWORD) {
-        // Stocker l'authentification dans localStorage
+    try {
+      // Appel à l'API backend pour vérifier le mot de passe
+      const response = await fetch(`${API_URL}/api/admin/verify-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Stocker le token d'authentification dans localStorage
+        localStorage.setItem('adminToken', data.token);
         localStorage.setItem('isAdminAuthenticated', 'true');
         // Rediriger vers le dashboard admin
         navigate('/admin/dashboard');
       } else {
-        setError('Mot de passe incorrect');
+        setError(data.message || 'Mot de passe incorrect');
         setIsSubmitting(false);
       }
-    }, 500);
+    } catch (error) {
+      console.error('Erreur lors de l\'authentification:', error);
+      setError('Erreur de connexion au serveur');
+      setIsSubmitting(false);
+    }
   };
 
   return (

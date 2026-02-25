@@ -263,7 +263,6 @@ const CheckoutPage = () => {
             </div>
 
             <div className="summary-info">
-              <p>📦 Livraison gratuite</p>
               <p>💳 Paiement à la livraison</p>
             </div>
           </div>

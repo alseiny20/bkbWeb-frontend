@@ -45,6 +45,7 @@ const AdminDashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('isAdminAuthenticated');
+    localStorage.removeItem('adminToken');
     navigate('/admin/login');
   };
 

@@ -1,6 +1,31 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
 
 class ApiService {
+  // Helper pour obtenir les headers avec le token d'authentification
+  getAuthHeaders() {
+    const token = localStorage.getItem('adminToken');
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    if (token) {
+      headers['x-admin-token'] = token;
+    }
+
+    return headers;
+  }
+
+  // Helper pour obtenir les headers pour FormData (sans Content-Type)
+  getAuthHeadersForFormData() {
+    const token = localStorage.getItem('adminToken');
+    const headers = {};
+
+    if (token) {
+      headers['x-admin-token'] = token;
+    }
+
+    return headers;
+  }
   async fetchCategories() {
     try {
       const response = await fetch(`${API_BASE_URL}/categories`);
@@ -98,7 +123,9 @@ class ApiService {
 
   async fetchAllOrders() {
     try {
-      const response = await fetch(`${API_BASE_URL}/orders`);
+      const response = await fetch(`${API_BASE_URL}/orders`, {
+        headers: this.getAuthHeaders()
+      });
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
       }
@@ -113,9 +140,7 @@ class ApiService {
     try {
       const response = await fetch(`${API_BASE_URL}/orders/${orderId}/status`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify({ status })
       });
       if (!response.ok) {
@@ -131,7 +156,8 @@ class ApiService {
   async deleteOrder(orderId) {
     try {
       const response = await fetch(`${API_BASE_URL}/orders/${orderId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: this.getAuthHeaders()
       });
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
@@ -148,9 +174,7 @@ class ApiService {
     try {
       const response = await fetch(`${API_BASE_URL}/products`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify(productData)
       });
       if (!response.ok) {
@@ -167,9 +191,7 @@ class ApiService {
     try {
       const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: this.getAuthHeaders(),
         body: JSON.stringify(productData)
       });
       if (!response.ok) {
@@ -185,7 +207,8 @@ class ApiService {
   async deleteProduct(productId) {
     try {
       const response = await fetch(`${API_BASE_URL}/products/${productId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: this.getAuthHeaders()
       });
       if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
@@ -205,6 +228,7 @@ class ApiService {
 
       const response = await fetch(`${API_BASE_URL}/upload`, {
         method: 'POST',
+        headers: this.getAuthHeadersForFormData(),
         body: formData
       });
 

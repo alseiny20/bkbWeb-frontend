@@ -1,6 +1,29 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const CartContext = createContext();
+
+// Clé pour localStorage
+const CART_STORAGE_KEY = 'bkb_cart';
+
+// Charger le panier depuis localStorage
+const loadCartFromStorage = () => {
+  try {
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+    return savedCart ? JSON.parse(savedCart) : [];
+  } catch (error) {
+    console.error('Erreur lors du chargement du panier:', error);
+    return [];
+  }
+};
+
+// Sauvegarder le panier dans localStorage
+const saveCartToStorage = (cartItems) => {
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+  } catch (error) {
+    console.error('Erreur lors de la sauvegarde du panier:', error);
+  }
+};
 
 export const useCart = () => {
   const context = useContext(CartContext);
@@ -11,8 +34,13 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(loadCartFromStorage);
   const [isAnimating, setIsAnimating] = useState(false);
+
+  // Sauvegarder le panier dans localStorage à chaque modification
+  useEffect(() => {
+    saveCartToStorage(cartItems);
+  }, [cartItems]);
 
   const addToCart = (product) => {
     // Vérifier si le produit est en stock

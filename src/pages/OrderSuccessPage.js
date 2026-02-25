@@ -57,26 +57,35 @@ const OrderSuccessPage = () => {
 
             <div className="detail-section">
               <h3>Articles commandés</h3>
-              {data.items.map((item, index) => (
-                <div key={index} className="order-item">
-                  <div className="order-item-image">
-                    {item.image ? (
-                      <img src={item.image} alt={item.name} />
-                    ) : (
-                      <span className="product-icon-fallback">
-                        {getProductIcon(item.categoryId)}
-                      </span>
-                    )}
+              <div className="order-items-list">
+                {data.items.map((item, index) => (
+                  <div key={index} className="order-item-card">
+                    <div className="order-item-top">
+                      <div className="order-item-image">
+                        {item.image ? (
+                          <img src={item.image} alt={item.name} />
+                        ) : (
+                          <span className="product-icon-fallback">
+                            {getProductIcon(item.categoryId)}
+                          </span>
+                        )}
+                      </div>
+                      <div className="order-item-details">
+                        <h4 className="order-item-name">{item.name}</h4>
+                        <p className="order-item-quantity">Quantité: {item.quantity}</p>
+                      </div>
+                    </div>
+                    <div className="order-item-bottom">
+                      <div className="order-item-price-detail">
+                        <span className="price-label">{formatPrice(item.price)} × {item.quantity}</span>
+                      </div>
+                      <div className="order-item-total">
+                        {formatPrice(item.price * item.quantity)}
+                      </div>
+                    </div>
                   </div>
-                  <div className="order-item-info">
-                    <span className="order-item-name">{item.name}</span>
-                    <span className="order-item-qty">x {item.quantity}</span>
-                  </div>
-                  <span className="order-item-price">
-                    {formatPrice(item.price * item.quantity)}
-                  </span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="order-total">

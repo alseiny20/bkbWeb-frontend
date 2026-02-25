@@ -126,17 +126,33 @@
   font-size: 0.85rem;
 }
 
-.order-item {
+/* Liste des articles */
+.order-items-list {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--space-sm) 0;
-  border-bottom: 1px solid var(--secondary-200);
-  gap: var(--space-sm);
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
 }
 
-.order-item:last-child {
-  border-bottom: none;
+.order-item-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--secondary-100);
+  padding: var(--space-md);
+  transition: all var(--transition-normal);
+}
+
+.order-item-card:hover {
+  border-color: var(--primary-200);
+  box-shadow: var(--shadow-sm);
+}
+
+.order-item-top {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--secondary-100);
 }
 
 .order-item-image {
@@ -145,8 +161,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 50px;
-  height: 50px;
+  min-width: 80px;
+  height: 80px;
   overflow: hidden;
 }
 
@@ -157,31 +173,50 @@
 }
 
 .order-item-image .product-icon-fallback {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
-.order-item-info {
+.order-item-details {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--space-xs);
   flex: 1;
 }
 
 .order-item-name {
   color: var(--secondary-800);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  margin: 0;
 }
 
-.order-item-qty {
+.order-item-quantity {
   color: var(--secondary-500);
-  font-size: 0.75rem;
+  font-size: 0.85rem;
+  margin: 0;
 }
 
-.order-item-price {
+.order-item-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-item-price-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-label {
+  color: var(--secondary-600);
+  font-size: 0.85rem;
+}
+
+.order-item-total {
   color: var(--accent-600);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
 }
 
 .order-total {
@@ -270,5 +305,25 @@
   .detail-value {
     max-width: 100%;
     text-align: left;
+  }
+
+  .order-item-top {
+    flex-direction: column;
+  }
+
+  .order-item-image {
+    width: 100%;
+    min-width: 100%;
+    height: 120px;
+  }
+
+  .order-item-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+
+  .order-item-total {
+    font-size: 1.2rem;
   }
 }
