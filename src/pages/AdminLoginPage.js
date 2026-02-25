@@ -17,7 +17,7 @@ const AdminLoginPage = () => {
 
     try {
       // Appel à l'API backend pour vérifier le mot de passe
-      const response = await fetch(`${API_URL}/api/admin/verify-password`, {
+      const response = await fetch(`${API_URL}/admin/verify-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
