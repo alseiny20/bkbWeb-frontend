@@ -13,7 +13,7 @@ const OrderSuccessPage = () => {
   }
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('fr-FR').format(price) + ' GNF';
+    return new Intl.NumberFormat('fr-FR').format(price).replace(/\s/g, '.') + ' GNF';
   };
 
   const getProductIcon = (categoryId) => {

@@ -229,6 +229,14 @@
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border: 2px solid rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-item-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
 .cart-item-image img {
@@ -253,6 +261,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  flex-wrap: nowrap;
 }
 
 .cart-item-name {
@@ -263,6 +272,11 @@
   text-decoration: none;
   transition: all 0.3s ease;
   letter-spacing: -0.025em;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .cart-item-name:hover {
@@ -297,6 +311,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: var(--space-md);
+  flex-shrink: 0;
 }
 
 .cart-item-bottom {
@@ -560,27 +575,42 @@
 
   .cart-item-top {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
     gap: 0.75rem;
   }
 
   .cart-item-image {
-    width: 100%;
-    min-width: 100%;
-    height: 180px;
+    grid-column: 1;
+    grid-row: 1 / -1;
+    width: 80px;
+    min-width: 80px;
+    height: 80px;
   }
 
   .cart-item-image img {
     object-fit: contain;
   }
 
+  .cart-item-image .product-icon-fallback {
+    font-size: 2rem;
+    padding: 0.5rem;
+  }
+
   .cart-item-header {
+    grid-column: 2;
+    grid-row: 1;
     width: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .cart-item-description {
+    grid-column: 2;
+    grid-row: 2;
     width: 100%;
+    margin-top: 0;
   }
 
   .cart-item-actions {
@@ -643,7 +673,20 @@
   }
 
   .cart-item-top {
-    gap: 0.75rem;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.6rem;
+  }
+
+  .cart-item-image {
+    width: 70px;
+    min-width: 70px;
+    height: 70px;
+  }
+
+  .cart-item-image .product-icon-fallback {
+    font-size: 1.75rem;
+    padding: 0.4rem;
   }
 
   .cart-item-header {

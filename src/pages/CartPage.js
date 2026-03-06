@@ -8,7 +8,7 @@ const CartPage = () => {
   const { cartItems, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('fr-FR').format(price) + ' GNF';
+    return new Intl.NumberFormat('fr-FR').format(price).replace(/\s/g, '.') + ' GNF';
   };
 
   const getProductIcon = (categoryId) => {
@@ -55,7 +55,7 @@ const CartPage = () => {
             {cartItems.map(item => (
               <div key={item.id} className="cart-item">
                 <div className="cart-item-top">
-                  <div className="cart-item-image">
+                  <Link to={`/product/${item.id}`} className="cart-item-image">
                     {item.image ? (
                       <img src={item.image} alt={item.name} />
                     ) : (
@@ -63,7 +63,7 @@ const CartPage = () => {
                         {getProductIcon(item.categoryId)}
                       </span>
                     )}
-                  </div>
+                  </Link>
 
                   <div className="cart-item-header">
                     <Link to={`/product/${item.id}`} className="cart-item-name">

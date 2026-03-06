@@ -68,12 +68,8 @@ const Header = () => {
         <div className="logo">
           <Link to="/" className="logo-link">
             <span className="logo-mark">
-              <img src="/favicon.png" alt="BKB" className="logo-mark-image" />
+              <img src="/bkb_logo.svg" alt="BKB" className="logo-mark-image" />
             </span>
-            <div className="logo-text">
-              <span className="brand-name">BKB</span>
-              <span className="brand-tagline">Commerce & Services</span>
-            </div>
           </Link>
         </div>
         <nav className="nav">
@@ -137,7 +133,12 @@ const Header = () => {
           
           <a href="#contact">À propos</a>
           <Link to="/cart" className={`cart-link ${isAnimating ? 'cart-animate' : ''}`}>
-            Panier
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="cart-icon">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span className="cart-text">Panier</span>
             {getCartItemsCount() > 0 && (
               <span className="cart-badge">{getCartItemsCount()}</span>
             )}
